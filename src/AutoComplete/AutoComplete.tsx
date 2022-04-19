@@ -14,13 +14,13 @@ const AutoComplete = ({ data }: AutoCompleteProps): JSX.Element => {
   const [userText, setUserText] = useState('');
   const [cities, setCities] = useState<CityProps[]>([]);
   const [isDropDownVisible, setIsDropDownVisible] = useState(true);
+
   const onTextChanged = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     let citySorter: Array<CityProps> = [];
     if (value.length > 0) {
       const regex = new RegExp(`^${value}`, 'i');
       citySorter = data
-        .sort()
         .sort((a, b) => a.name.localeCompare(b.name))
         .filter((v: CityProps) => regex.test(v.name));
     }
@@ -29,7 +29,7 @@ const AutoComplete = ({ data }: AutoCompleteProps): JSX.Element => {
     setCities(citySorter);
   };
 
-  const citiesSelected = (value: CityProps) => {
+  const citySelected = (value: CityProps) => {
     setIsDropDownVisible(false);
     setUserText(value.name);
     setCities([]);
@@ -41,27 +41,22 @@ const AutoComplete = ({ data }: AutoCompleteProps): JSX.Element => {
         type="text"
         name="citySearch"
         id="citySearch"
-        autoComplete="off"
         value={userText}
         onChange={onTextChanged}
         className="input"
       />
       {cities.length > 0 && isDropDownVisible && (
-        <div className="dropdown-container">
+        <ul className="dropdown-container">
           {cities.map((item: CityProps) => (
-            <div
+            <li
               key={`${item.lat}${item.lng}`}
               className="dropdown-container-item"
+              onClick={() => citySelected(item)}
             >
-              <div
-                key={`${item.lat}${item.lng}`}
-                onClick={() => citiesSelected(item)}
-              >
-                {item.name}
-              </div>
-            </div>
+              <button className="dropdown-container-button">{item.name}</button>
+            </li>
           ))}
-        </div>
+        </ul>
       )}
     </div>
   );

@@ -37,7 +37,6 @@
 }
 
 .dropdown-container-item {
-    padding: 2px 8px;
     width: 100%;
     box-sizing: border-box;
 }
@@ -45,4 +44,19 @@
 .dropdown-container-item:hover {
     background-color: #e5e8ec;
     cursor: pointer;
+}
+
+.dropdown-container-button {
+    padding: 2px 8px;
+    background: none;
+    color: inherit;
+    border: none;
+    font: inherit;
+    outline: inherit;
+    width: 100%;
+    text-align: left;
+}
+
+.dropdown-container-button:focus {
+    background-color: #e5e8ec;
 }
