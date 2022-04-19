@@ -11,32 +11,30 @@ interface AutoCompleteProps {
 }
 
 const AutoComplete = ({ data }: AutoCompleteProps): JSX.Element => {
-  const [search, setSearch] = useState({
-    text: '',
-    cities: []
-  });
+  const [userText, setUserText] = useState('');
+  const [cities, setCities] = useState<CityProps[]>([]);
   const [isDropDownVisible, setIsDropDownVisible] = useState(true);
   const onTextChanged = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    let cities: Array<CityProps> = [];
+    let citySorter: Array<CityProps> = [];
     if (value.length > 0) {
       const regex = new RegExp(`^${value}`, 'i');
-      cities = data.sort().filter((v: CityProps) => regex.test(v.name));
+      citySorter = data
+        .sort()
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .filter((v: CityProps) => regex.test(v.name));
     }
     setIsDropDownVisible(true);
-    setSearch({ cities, text: value });
+    setUserText(value);
+    setCities(citySorter);
   };
 
   const citiesSelected = (value: CityProps) => {
     setIsDropDownVisible(false);
-
-    setSearch({
-      text: value.name,
-      cities: []
-    });
+    setUserText(value.name);
+    setCities([]);
   };
 
-  const { cities } = search;
   return (
     <div onClick={() => setIsDropDownVisible(false)}>
       <input
@@ -44,14 +42,21 @@ const AutoComplete = ({ data }: AutoCompleteProps): JSX.Element => {
         name="citySearch"
         id="citySearch"
         autoComplete="off"
-        value={search.text}
+        value={userText}
         onChange={onTextChanged}
+        className="input"
       />
       {cities.length > 0 && isDropDownVisible && (
-        <div>
+        <div className="dropdown-container">
           {cities.map((item: CityProps) => (
-            <div key={item.name}>
-              <div key={item.name} onClick={() => citiesSelected(item)}>
+            <div
+              key={`${item.lat}${item.lng}`}
+              className="dropdown-container-item"
+            >
+              <div
+                key={`${item.lat}${item.lng}`}
+                onClick={() => citiesSelected(item)}
+              >
                 {item.name}
               </div>
             </div>

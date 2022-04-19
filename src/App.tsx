@@ -1,5 +1,5 @@
-import AutoComplete from './AutoComplete';
-import cityData from './data.json';
+import AutoComplete from './AutoComplete/AutoComplete';
+import cityData from './utils/data.json';
 
 const App = (): JSX.Element => {
   return (
