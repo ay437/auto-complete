@@ -1,9 +1,12 @@
-# auto-complete
-React Typescript auto-complete component
+# React Typescript Auto-Complete component
 
-## Available Scripts
+In the project directory, you should use Node version 14 or higher.
 
-In the project directory, you can run:
+Start by running the below command in order to get the necessary node modules:
+
+### `npm install`
+
+The main scripts to use after are stated below also:
 
 ### `npm start`
 
