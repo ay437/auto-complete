@@ -11,9 +11,9 @@ interface AutoCompleteProps {
 }
 
 const AutoComplete = ({ data }: AutoCompleteProps): JSX.Element => {
-  const [userText, setUserText] = useState('');
+  const [userText, setUserText] = useState<string>('');
   const [cities, setCities] = useState<CityProps[]>([]);
-  const [isDropDownVisible, setIsDropDownVisible] = useState(true);
+  const [isDropDownVisible, setIsDropDownVisible] = useState<boolean>(true);
 
   const onTextChanged = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
